@@ -54,6 +54,8 @@ GameManager.prototype.setup = function () {
     this.addStartTiles();
   }
 
+  this.bestTile = this.storageManager.getBestTile() || 0;
+
   // Update the actuator
   this.actuate();
 };
@@ -75,14 +77,21 @@ GameManager.prototype.addRandomTile = function () {
   }
 };
 
+GameManager.prototype.setOver = function() {
+  this.over = true;
+};
+
 // Sends the updated grid to the actuator
 GameManager.prototype.actuate = function () {
   if (this.storageManager.getBestScore() < this.score) {
     this.storageManager.setBestScore(this.score);
   }
 
+  this.updateBestTile();
+
   // Clear the state when the game is over (game over only, not win)
   if (this.over) {
+    this.updateAverageScore();
     this.storageManager.clearGameState();
   } else {
     this.storageManager.setGameState(this.serialize());
@@ -93,6 +102,8 @@ GameManager.prototype.actuate = function () {
     over:       this.over,
     won:        this.won,
     bestScore:  this.storageManager.getBestScore(),
+    bestTile:   this.storageManager.getBestTile(),
+    averageScore: this.storageManager.getAverageScore(),
     terminated: this.isGameTerminated()
   });
 
@@ -165,6 +176,8 @@ GameManager.prototype.move = function (direction) {
 
           // Update the score
           self.score += merged.value;
+
+          if (merged.value > self.bestTile) self.bestTile = merged.value;
 
           // The mighty 2048 tile
           if (merged.value === 2048) self.won = true;
@@ -270,3 +283,19 @@ GameManager.prototype.tileMatchesAvailable = function () {
 GameManager.prototype.positionsEqual = function (first, second) {
   return first.x === second.x && first.y === second.y;
 };
+
+GameManager.prototype.updateAverageScore = function() {
+  var oldAverageScore = parseInt(this.storageManager.getAverageScore(), 10) || 0;
+  var newAverageScore = parseInt((oldAverageScore + this.score) / 2, 10);
+  if (oldAverageScore === 0) {
+      newAverageScore = this.score;
+  }
+  this.storageManager.setAverageScore(newAverageScore);
+};
+
+GameManager.prototype.updateBestTile = function() {
+  console.log(this.storageManager.getBestTile(), this.bestTile);
+  if (this.storageManager.getBestTile() < this.bestTile) {
+    this.storageManager.setBestTile(this.bestTile);
+  }
+}

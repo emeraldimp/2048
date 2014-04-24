@@ -21,6 +21,8 @@ window.fakeStorage = {
 function LocalStorageManager() {
   this.bestScoreKey     = "bestScore";
   this.gameStateKey     = "gameState";
+  this.averageScoreKey  = "averageScore";
+  this.bestTileKey      = "bestTile";
 
   var supported = this.localStorageSupported();
   this.storage = supported ? window.localStorage : window.fakeStorage;
@@ -46,6 +48,24 @@ LocalStorageManager.prototype.getBestScore = function () {
 
 LocalStorageManager.prototype.setBestScore = function (score) {
   this.storage.setItem(this.bestScoreKey, score);
+};
+
+// Average score getters/setters
+LocalStorageManager.prototype.getAverageScore = function () {
+  return this.storage.getItem(this.averageScoreKey) || 0;
+};
+
+LocalStorageManager.prototype.setAverageScore = function (score) {
+  this.storage.setItem(this.averageScoreKey, score);
+};
+
+// Best tile getters/setters
+LocalStorageManager.prototype.getBestTile = function () {
+  return this.storage.getItem(this.bestTileKey) || 0;
+};
+
+LocalStorageManager.prototype.setBestTile = function (score) {
+  this.storage.setItem(this.bestTileKey, score);
 };
 
 // Game state getters/setters and clearing

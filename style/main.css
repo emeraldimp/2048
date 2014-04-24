@@ -8,7 +8,7 @@ html, body {
   font-size: 18px; }
 
 body {
-  margin: 80px 0; }
+  margin: 40px 0; }
 
 .heading:after {
   content: "";
@@ -20,7 +20,9 @@ h1.title {
   font-weight: bold;
   margin: 0;
   display: block;
-  float: left; }
+  float: left;
+  position: relative;
+  top: 30px; }
 
 @-webkit-keyframes move-up {
   0% {
@@ -47,10 +49,10 @@ h1.title {
     top: -50px;
     opacity: 0; } }
 .scores-container {
-  float: right;
+  position: relative;
   text-align: right; }
 
-.score-container, .best-container {
+.score-container, .best-container, .average-score-container, .best-tile-container {
   position: relative;
   display: inline-block;
   background: #bbada0;
@@ -62,8 +64,9 @@ h1.title {
   border-radius: 3px;
   color: white;
   margin-top: 8px;
-  text-align: center; }
-  .score-container:after, .best-container:after {
+  text-align: center;
+  width: 10%; }
+  .score-container:after, .best-container:after, .average-score-container:after, .best-tile-container:after {
     position: absolute;
     width: 100%;
     top: 10px;
@@ -73,7 +76,7 @@ h1.title {
     line-height: 13px;
     text-align: center;
     color: #eee4da; }
-  .score-container .score-addition, .best-container .score-addition {
+  .score-container .score-addition, .best-container .score-addition, .average-score-container .score-addition, .best-tile-container .score-addition {
     position: absolute;
     right: 30px;
     color: red;
@@ -88,6 +91,12 @@ h1.title {
     -webkit-animation-fill-mode: both;
     -moz-animation-fill-mode: both;
     animation-fill-mode: both; }
+
+.average-score-container:after {
+  content: "Average"; }
+
+.best-tile-container:after {
+  content: "Best Tile"; }
 
 .score-container:after {
   content: "Score"; }
@@ -138,7 +147,6 @@ hr {
   100% {
     opacity: 1; } }
 .game-container {
-  margin-top: 40px;
   position: relative;
   padding: 15px;
   cursor: default;
@@ -497,7 +505,10 @@ hr {
   line-height: 42px;
   display: block;
   text-align: center;
-  float: right; }
+  height: 25px;
+  margin: 4px 0;
+  padding: 15px 25px;
+  line-height: 30px; }
 
 .game-explanation {
   margin-top: 50px; }
@@ -507,12 +518,10 @@ hr {
     font-size: 15px; }
 
   body {
-    margin: 20px 0;
     padding: 0 20px; }
 
   h1.title {
-    font-size: 27px;
-    margin-top: 15px; }
+    font-size: 27px; }
 
   .container {
     width: 280px;
@@ -540,7 +549,6 @@ hr {
     margin-top: 2px; }
 
   .game-container {
-    margin-top: 17px;
     position: relative;
     padding: 10px;
     cursor: default;
