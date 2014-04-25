@@ -294,7 +294,6 @@ GameManager.prototype.updateAverageScore = function() {
 };
 
 GameManager.prototype.updateBestTile = function() {
-  console.log(this.storageManager.getBestTile(), this.bestTile);
   if (this.storageManager.getBestTile() < this.bestTile) {
     this.storageManager.setBestTile(this.bestTile);
   }
